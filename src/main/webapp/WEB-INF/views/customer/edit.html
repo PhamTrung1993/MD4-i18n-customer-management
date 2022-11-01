@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="customer/customerList :: header"></div>
+</head>
+<body>
+<h1>Edit Customer</h1>
+<div class="container">
+    <form  method="post" th:object="${customer}">
+        <table class="table table-hover">
+            <tr>
+                <td>ID</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Province</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="text" th:value="*{id}" th:field="*{id}" name="id"></td>
+                <td><input type="text" th:value="*{firstName}" th:field="*{firstName}" name="firstName"></td>
+                <td><input type="text" th:value="*{lastName}" th:field="*{lastName}" name="lastName"></td>
+                <td><select name="province">
+                    <option th:each="p : ${provinces}"
+                            th:value="${p.id}"
+                            th:text="${p.name}"
+                            th:selected="(${p.id} == *{province.id})">
+                    </option>
+                </select>
+                </td>
+                <td><input class="btn btn-outline-success" type="submit" value="Edit"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

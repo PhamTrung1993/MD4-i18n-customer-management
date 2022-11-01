@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<br>
+<body>
+
+<div class="container-fluid">
+    <a href="?lang=en">English</a> | <a href="?lang=vi">Vietnamese</a>
+    <h1 th:text="#{title}"></h1>
+    <a class="btn btn-outline-primary" th:href="@{/customer/create}"><span th:text="#{page.create}"></span></a>
+    <form>
+        <span th:text="#{page.search}"></span>
+        <input name="s" type="text"/>
+        <input type="submit" value="Search"/>
+    </form><br/>
+    <br>
+    <th:block th:object="${list}">
+        <table class="table table-hover">
+            <tr>
+                <td><span th:text="#{table.id}"></span></td>
+                <td><span th:text="#{table.firstName}"></span></td>
+                <td><span th:text="#{table.lastName}"></span></td>
+                <td><span th:text="#{table.province}"></span></td>
+                <td colspan="2"><span th:text="#{table.action}"></span></td>
+            </tr>
+            <tr th:each="customer : ${list}">
+                <td th:text="${customer.id}"></td>
+                <td th:text="${customer.firstName}"></td>
+                <td th:text="${customer.lastName}"></td>
+                <td th:text="${customer.province.name}"></td>
+                <td><a class="btn btn-outline-success" th:href="@{customer/edit/__${customer.id}__}"><span th:text="#{table.action.edit}"></span></a></td>
+                <td><a class="btn btn-outline-danger" th:href="@{customer/delete/__${customer.id}__}"><span th:text="#{table.action.delete}"></span></a></td>
+            </tr>
+        </table>
+        <div>
+            <a th:href="@{'/customer'(page=${list.number - 1})}" th:if="${list.hasPrevious()}"><span th:text="#{pagination.previous}"></span></a>
+            <span th:text="${list.number + 1}"></span>/<span th:text="${list.totalPages}"></span>
+            <a th:href="@{'/customer'(page=${list.number + 1})}" th:if="${list.hasNext()}"><span th:text="#{pagination.next}"></span></a>
+        </div>
+    </th:block>
+
+</div>
+
+</body>
+<style>
+    table, th, tr, td {
+        border-collapse: collapse;
+        border: 1px solid black;
+    }
+    th, td{
+        width: 120px;
+        text-align: center;
+    }
+</style>
+</html>
